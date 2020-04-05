@@ -121,10 +121,14 @@ export default {
 					}
 				})
 			}).then(() =>{
+				console.log(flag)
 				if(flag)
-					db.collection('user-pwd').add({user:this.email,pwd:this.pwd})
-				this.$router.go()
-				
+					db.collection('user-pwd').add({user:this.email,pwd:this.pwd}).then(() =>{
+						alert('Account Creation Successfull')
+						this.$cookie.set('username', this.email);
+						this.$router.go()
+						})
+
 			})
 		}
 	}

@@ -12,7 +12,7 @@
 			<div class="rem-container" v-for="(reminder,index) in reminders" :key="reminders[index].id">
 				<b-form-input :disabled="dis[index]" v-model="reminders[index].rem" id="nested-street">{{index}}</b-form-input>
 				<b-button @click="toggle(index)">Edit</b-button>
-				<b-button >Save</b-button>
+				<b-button @click="del(index)">Delete</b-button>
 			</div>
 		</b-jumbotron>
 	</div>
@@ -55,12 +55,22 @@ export default {
 					this.dis.push(true)
 				})
 			}).catch((error) => {
-
+				
 			})
 		},
 		logout(){
 			this.$cookie.delete('username');
 			this.$router.go()
+		},
+		del(index){
+			//console.log(this.reminders[index].id)
+			db.collection(this.username).get().then((data) => {
+				data.forEach((doc) => {
+					if(doc.id === this.reminders[index].id)
+						doc.delete()
+				})
+			
+			})
 		}
 	},
 	created(){
