@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <head_text />
-    <user v-if="logged == true" />
+    <user v-if="logged == true" :username="username"/>
     <nonuser v-else />
   </div>
 </template>
@@ -11,19 +11,25 @@
 import user from '@/components/user.vue'
 import nonuser from '@/components/nonuser.vue'
 import head_text from '@/components/head_text.vue'
-
+import {mapState} from 'vuex'
 
 export default {
   name: 'Home',
   components: {
 	head_text,
 	user,
-	nonuser
+	nonuser,
   },
   data(){
 	  return{
-		  logged:true
+		  logged:true,
+		  username:''
 	  }
+  },
+  created(){
+	  this.username = this.$cookie.get('username');
+	  if(this.username === null)
+	  	this.logged= false
   }
 }
 </script>

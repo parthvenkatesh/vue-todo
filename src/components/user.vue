@@ -1,7 +1,7 @@
 <template>
 	<div  class="container">
 		<div class="logged">
-		<b-button >Logout</b-button>
+		<b-button @click="logout()">Logout</b-button>
 		</div>
 		<b-jumbotron>
 			<div class="form-container">
@@ -9,8 +9,8 @@
 				<b-form-input v-model="reminder" id="nested-street"></b-form-input>
 				<b-button @click="save()">Save</b-button>
 			</div>
-			<div class="rem-container" v-for="(reminder,index) in reminders" :key="index">
-				<b-form-input :disabled="dis[index]" v-model="reminders[index]" id="nested-street">{{index}}</b-form-input>
+			<div class="rem-container" v-for="(reminder,index) in reminders" :key="reminders[index].id">
+				<b-form-input :disabled="dis[index]" v-model="reminders[index].rem" id="nested-street">{{index}}</b-form-input>
 				<b-button @click="toggle(index)">Edit</b-button>
 				<b-button >Save</b-button>
 			</div>
@@ -20,29 +20,51 @@
 
 
 <script>
-import db from '@/firebase.js';
+import { db } from '@/firebase.js'
+import {mapState} from 'vuex'
+
 export default {
 	name : 'user',
+	props:{
+		username : String
+	},
 	data(){
 		return{
 			reminder : '',
 			reminders : [],
-			dis : []
+			dis : [],
 		}
-	},
-	mounted(){
-		db.ref('parthvenkatesh@gmail.com').push
 	},
 	methods : {
 		toggle(index){
-			alert(index)
 			this.dis[index] = !this.dis[index]
 		},
 		save(){
-			this.reminders.push(this.reminder)
+			db.collection(this.username).add({rem:this.reminder})
+			this.reminders = []
 			this.reminder=''
-			this.dis.push(true)
+			this.dis = []
+			this.readData()
+		},
+		readData(){
+			db.collection(this.username).get().then((querySnapshot) => {
+				querySnapshot.forEach((doc) => {
+					this.reminders.push({
+						id : doc.id,
+						rem : doc.data().rem})
+					this.dis.push(true)
+				})
+			}).catch((error) => {
+
+			})
+		},
+		logout(){
+			this.$cookie.delete('username');
+			this.$router.go()
 		}
+	},
+	created(){
+		this.readData()
 	}
 }
 </script>
@@ -54,7 +76,7 @@ export default {
 }
 .rem-container{
 	display: flex;
-	flex-direction: row
+	flex-direction: row,
 }
 .container{
 	width: 70%
@@ -62,5 +84,6 @@ export default {
 .form-container{
 	display: flex;
 	flex-direction: row;
+	padding-bottom: 20px;
 }
 </style>

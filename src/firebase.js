@@ -8,4 +8,4 @@ const app = initializeApp({
 	messagingSenderId: "902532741796"
 })
 
-export const db = app.database() 
+export const db = app.firestore() 
