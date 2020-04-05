@@ -7,7 +7,7 @@
 			<div class="form-container">
 				<span>Reminder: </span>
 				<b-form-input v-model="reminder" id="nested-street"></b-form-input>
-				<b-button @click="save()">Save</b-button>
+				<b-button :disabled="reminder===''" @click="save()">Save</b-button>
 			</div>
 			<div class="rem-container" v-for="(reminder,index) in reminders" :key="reminders[index].id">
 				<b-form-input :disabled="dis[index]" v-model="reminders[index].rem" id="nested-street">{{index}}</b-form-input>
@@ -32,7 +32,7 @@ export default {
 		return{
 			reminder : '',
 			reminders : [],
-			dis : [],
+			dis : []
 		}
 	},
 	methods : {
@@ -64,12 +64,8 @@ export default {
 		},
 		del(index){
 			//console.log(this.reminders[index].id)
-			db.collection(this.username).get().then((data) => {
-				data.forEach((doc) => {
-					if(doc.id === this.reminders[index].id)
-						doc.delete()
-				})
-			
+			db.collection(this.username).doc(this.reminders[index].id).delete().then(() =>{
+				this.$router.go()
 			})
 		}
 	},
