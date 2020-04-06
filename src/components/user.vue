@@ -57,7 +57,6 @@ export default {
 			db.collection(this.username).add({rem:this.reminder}).then(() => {
 				this.reminders = []
 				this.reminder=''
-				this.dis = []
 				this.readData()
 			})
 		},
@@ -82,7 +81,6 @@ export default {
 			db.collection(this.username).doc(this.reminders[index].id).delete().then(() =>{
 				this.reminders = []
 				this.reminder=''
-				this.dis = []
 				this.readData()
 			})
 		}

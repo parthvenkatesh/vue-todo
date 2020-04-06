@@ -7,8 +7,11 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "bootstrap": "^4.4.1",
+    "bootstrap-vue": "^2.10.1",
     "core-js": "^3.6.4",
     "firebase": "^7.13.2",
+    "firebase-tools": "^8.0.1",
     "vue": "^2.6.11",
     "vue-cookie": "^1.1.4",
     "vue-firebase": "^1.0.8",
