@@ -84,7 +84,7 @@ export default {
 	methods : {
 		toggle_disp(){
 			this.disp_login = !this.disp_login
-			this.disp_text = this.disp_login === true ? 'New User? Signup' :'Already User? Login'
+			this.disp_text = this.disp_login ? 'New User? Signup' :'Already User? Login'
 			this.email=''
 			this.cemail=''
 			this.pwd=''
@@ -110,6 +110,7 @@ export default {
 					let details = doc.data()
 					if(this.email === details.user && this.pwd === details.pwd){
 						found = true
+						console.log('logged')
 						this.$cookie.set('username', this.email);
 						this.$router.go()
 					}

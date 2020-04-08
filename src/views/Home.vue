@@ -28,7 +28,7 @@ export default {
   },
   created(){
 	  this.username = this.$cookie.get('username');
-	  if(this.username)
+	  if(this.username === null )
 	  	this.logged= false
   }
 }
