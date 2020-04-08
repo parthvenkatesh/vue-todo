@@ -1,8 +1,6 @@
 <template>
 	<div>
-		<div class="not-logged">
-		<b-button @click="toggle_disp()">{{disp_text}}</b-button>
-		</div>
+
 		<div class="forms" >
 			<div v-if="disp_login">
 				<h2>Login</h2>
@@ -24,7 +22,10 @@
 					>
 						<b-form-input v-model="pwd" type="password" id="nested-city"></b-form-input>
 					</b-form-group>
-					<b-button @click="login()" :disabled="check()" variant="primary">Login</b-button>
+					<div class="btn-container">
+						<b-button variant="success" @click="login()" :disabled="check()" >Login</b-button>
+						<b-button variant="primary" @click="toggle_disp()">{{disp_text}}</b-button>
+					</div>
 				</b-card>
 			</div>
 
@@ -56,7 +57,10 @@
 					>
 						<b-form-input v-model="pwd" type="password"  id="nested-city"></b-form-input>
 					</b-form-group>
-					<b-button @click="signup()" :disabled="check()"  variant="primary">Sign Up</b-button>
+					<div class="btn-container">
+						<b-button variant="success" @click="signup()" :disabled="check()">Sign Up</b-button>
+						<b-button variant="primary" @click="toggle_disp()" >{{disp_text}}</b-button>
+					</div>
 				</b-card>
 			</div>
 		</div>
@@ -71,7 +75,7 @@ export default {
 	data(){
 		return{
 			disp_login:true,
-			disp_text:'Signup',
+			disp_text:'New User? Signup',
 			email : '',
 			cemail : '',
 			pwd : '',
@@ -80,7 +84,7 @@ export default {
 	methods : {
 		toggle_disp(){
 			this.disp_login = !this.disp_login
-			this.disp_text = this.disp_login === true ? 'Signup' :'Login'
+			this.disp_text = this.disp_login === true ? 'New User? Signup' :'Already User? Login'
 			this.email=''
 			this.cemail=''
 			this.pwd=''
@@ -140,10 +144,11 @@ export default {
 }
 </script>
 
-<style scoped>
-.not-logged{
+<style>
+.btn-container{
 	display: flex;
-	flex-direction: row-reverse
+	justify-content: space-around
+
 }
 
 .forms{

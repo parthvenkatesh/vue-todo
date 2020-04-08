@@ -44,7 +44,7 @@ export default {
 			if(this.reminders[index].dis){
 				if(this.reminders[index].rem !== this.preminder)
 					db.collection(this.username).doc(this.reminders[index].id).update({rem:this.reminders[index].rem}).then(() =>{
-						//alert('updated')
+						console.log('updated')
 					})
 				else
 					this.preminder=''
@@ -54,10 +54,23 @@ export default {
 			}
 		},
 		save(){
+			let ob = {
+				id : '',
+				rem :  this.reminder,
+				dis : true
+			}
+			
 			db.collection(this.username).add({rem:this.reminder}).then(() => {
-				this.reminders = []
-				this.reminder=''
-				this.readData()
+				db.collection(this.username).get().then((querySnapshot) =>{
+					querySnapshot.forEach((doc) => {
+						if(doc.rem === ob.rem)
+							ob.id = doc.id
+					})
+				}).then(()=>{
+					this.reminders.push(ob)
+					this.reminder=''
+					console.log('Saved')
+				})
 			})
 		},
 		readData(){
@@ -78,10 +91,10 @@ export default {
 		},
 		del(index){
 			//console.log(this.reminders[index].id)
+						
 			db.collection(this.username).doc(this.reminders[index].id).delete().then(() =>{
-				this.reminders = []
-				this.reminder=''
-				this.readData()
+				console.log('deleted')
+				this.reminders.splice(index,1)
 			})
 		}
 	},
