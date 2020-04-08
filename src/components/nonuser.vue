@@ -158,7 +158,18 @@ export default {
 	align-items: center
 }
 
-.forms > div{
-	width: 50%;
+
+
+@media  (max-width: 500px) {
+	.forms > div{
+	width: 100%;
+	}
 }
+@media  (min-width: 500px) {
+	.forms > div{
+	width: 70%;
+	}
+}
+
+
 </style>
