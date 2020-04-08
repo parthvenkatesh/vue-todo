@@ -92,21 +92,29 @@ export default {
 </script>
 
 <style scoped>
+.container{
+	width: 100%;
+}
 .logged{
+	width: 100%;
 	display: flex;
 	flex-direction: row-reverse
 }
-.rem-container{
-	display: flex;
-	flex-direction: row
-}
-.container{
-	width: 70%
+b-jumbotron{
+	width: inherit
 }
 .form-container{
 	display: flex;
 	flex-direction: row;
 	padding-bottom: 20px;
+}
+.rem-text{
+	margin:0 5px 0 5px ;
+}
+
+.rem-container{
+	display: flex;
+	flex-direction: row
 }
 .rem-div{
 	width: 90%
@@ -119,9 +127,6 @@ export default {
 }
 .x-btn:hover{
 	cursor:pointer
-}
-.rem-text{
-	margin:0 5px 0 5px ;
 }
 .tool{
 	font-size: 1.5em;

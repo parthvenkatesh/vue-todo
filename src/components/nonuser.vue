@@ -100,14 +100,19 @@ export default {
 			}
 		},
 		login(){
+			let found = false
 			db.collection('user-pwd').get().then((querySnapshot) => {
 				querySnapshot.forEach((doc) => {
 					let details = doc.data()
 					if(this.email === details.user && this.pwd === details.pwd){
+						found = true
 						this.$cookie.set('username', this.email);
 						this.$router.go()
 					}
 				})
+			}).then((_) =>{
+				if(!found)
+					alert('User or Password Incorrect')
 			})
 		},
 		signup(){
