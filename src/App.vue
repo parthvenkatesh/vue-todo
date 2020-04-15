@@ -1,9 +1,29 @@
 <template>
   <div id="app">
+	<head_text />
     <router-view/>
   </div>
 </template>
 
+
+<script>
+import head_text from '@/components/head_text.vue'
+
+export default {
+	name:'App',
+	components:{
+		head_text,
+	},
+	data(){
+	  return{
+		
+	  }
+  },
+  created(){
+	  this.$store.commit("setuser",this.$cookie.get('username'))
+  },
+}
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -12,7 +32,9 @@
   text-align: center;
   color: #2c3e50;
 }
-
+.home{
+	color: white;
+}
 #nav {
   padding: 30px;
 }
